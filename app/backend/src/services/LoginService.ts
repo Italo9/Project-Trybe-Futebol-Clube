@@ -1,4 +1,3 @@
-import Joi = require('joi');
 import User from '../database/models/users';
 import BcryptPassword from './BcryptPassword';
 import JwtService from './JwtService';
@@ -27,12 +26,8 @@ export default class LoginService {
 
     if (user) {
       const passwordEncrypt = await BcryptPassword.checkPassword(password, user.password);
-      const { id } = user;
       if (passwordEncrypt) {
-        const token = JwtService.sign({
-          email,
-          id,
-        }); return token;
+        const token = JwtService.sign({ ...user }); return token;
       }
     } else {
       LoginService.validateUser();
