@@ -23,6 +23,7 @@ export default class LoginService {
       throw e;
     }
     const user = await this.userModel.findOne({ where: { email } });
+    // console.log(user);
 
     if (user) {
       const passwordEncrypt = await BcryptPassword.checkPassword(password, user.password);
