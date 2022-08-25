@@ -17,6 +17,16 @@ export default class TeamsService {
 
   async saveMatch({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: IMatches):
   Promise<Matches> {
+    if (homeTeam === awayTeam) {
+      const e = new Error('It is not possible to create a match with two equal teams');
+      e.name = 'UNAUTHORIZED'; throw e;
+    }
+    const existsAwayTeam = (await (this.getAll())).find((ele) => ele.awayTeam === awayTeam);
+    const existsHomeTeam = (await (this.getAll())).find((ele) => ele.homeTeam === homeTeam);
+    if (!existsAwayTeam || !existsHomeTeam) {
+      const e = new Error('There is no team with such id!');
+      e.name = 'NotFoundError'; throw e;
+    }
     const matches: Matches = await this.matchesModel.create({
       homeTeam,
       homeTeamGoals,
