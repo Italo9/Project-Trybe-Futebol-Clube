@@ -44,4 +44,18 @@ export default class TeamsService {
     updateMatche?.save();
     return updateMatche;
   }
+
+  async updateGameInProgress(
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+    id: number,
+  ): Promise<object | null> {
+    const updateMatche = await this.matchesModel.findOne({ where: { id } });
+    updateMatche?.set({
+      homeTeamGoals,
+      awayTeamGoals,
+    });
+    updateMatche?.save();
+    return updateMatche;
+  }
 }
