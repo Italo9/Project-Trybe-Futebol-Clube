@@ -25,4 +25,13 @@ export default class TeamsService {
       inProgress: true });
     return matches;
   }
+
+  async updateMatch(id: number): Promise<object | null> {
+    const updateMatche = await this.matchesModel.findOne({ where: { id } });
+    updateMatche?.set({
+      inProgress: false,
+    });
+    updateMatche?.save();
+    return updateMatche;
+  }
 }
