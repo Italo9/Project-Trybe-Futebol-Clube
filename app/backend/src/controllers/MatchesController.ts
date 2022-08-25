@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import ValidateTokenService from '../services/ValidateTokenService';
 import MatchesService from '../services/MatchesService';
 
 require('express-async-errors');
@@ -12,6 +13,7 @@ export default class TeamsController {
   }
 
   async saveMatch(req: Request, res: Response): Promise<void> {
+    ValidateTokenService.validateToken(req.headers.authorization as string);
     const matche = await this.matchesService.saveMatch(req.body);
     res.status(201).json(matche);
   }
