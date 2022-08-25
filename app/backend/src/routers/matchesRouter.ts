@@ -7,5 +7,6 @@ const matchesController = new MatchesController(matchesService);
 
 const matchesRouter = Router();
 matchesRouter.get('/', (req, res) => matchesController.getAll(req, res));
+matchesRouter.post('/', (req, res) => matchesController.saveMatch(req, res));
 
 export default matchesRouter;

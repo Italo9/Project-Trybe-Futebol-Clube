@@ -10,4 +10,9 @@ export default class TeamsController {
     const matches = await this.matchesService.getAll();
     res.status(200).json(matches);
   }
+
+  async saveMatch(req: Request, res: Response): Promise<void> {
+    const matche = await this.matchesService.saveMatch(req.body);
+    res.status(201).json(matche);
+  }
 }
